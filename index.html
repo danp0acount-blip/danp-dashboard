@@ -896,7 +896,7 @@ function openEditP(pid){
       <option ${p.status==='제출완료'?'selected':''}>제출완료</option></select></div>
 
     <div class="mfield"><label>포함 항목 (줄바꿈으로 구분)</label>
-      <textarea id="m_items">${p.items.join('\n')}</textarea></div>
+      <textarea id="m_items">${(p.items||[]).join('\n')}</textarea></div>
     <div class="mfield"><label>노션 페이지 URL</label>
       <input id="m_nurl" value="${p.notionUrl||''}" placeholder="https://notion.so/...">
       <p style="font-size:11px;color:var(--text3);margin-top:4px">완성본 파일을 올릴 노션 페이지 링크</p>
@@ -954,12 +954,14 @@ function initDInput(){
 
 function doEditP(pid){
   const p=getDrop().plans.find(x=>x.id===pid);if(!p)return;
-  p.nm=document.getElementById('m_nm').value||p.nm;
-  p.ic=document.getElementById('m_ic').value||p.ic;
+  p.nm=document.getElementById('m_nm')?.value||p.nm;
+  p.ic=document.getElementById('m_ic')?.value||p.ic;
   p.who=Array.from(document.querySelectorAll('input[name=m_who]:checked')).map(o=>o.value);
-  p.dl=document.getElementById('m_dl').value||p.dl;
-  p.status=document.getElementById('m_st').value;
-  p.items=document.getElementById('m_items').value.split('\n').filter(x=>x.trim());
+  if(!p.who.length)p.who=p.who; // 비어있으면 기존 유지
+  const dlVal=document.getElementById('m_dl')?.value;
+  if(dlVal)p.dl=dlVal;
+  const stEl=document.getElementById('m_st');if(stEl)p.status=stEl.value;
+  const itemsEl=document.getElementById('m_items');if(itemsEl)p.items=itemsEl.value.split('\n').filter(x=>x.trim());
   const nurle=document.getElementById('m_nurl');if(nurle)p.notionUrl=nurle.value.trim();
   closeM();render();saveData();
 }
