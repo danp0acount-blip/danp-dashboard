@@ -303,24 +303,24 @@ async function loadData(){
   const dot=document.getElementById('sdot'),stat=document.getElementById('sstat');
   try{
     dot.className='sdot'; stat.textContent='불러오는 중...';
-    const r=await fetch(GIST_URL,{headers:{'Authorization':'token '+GIST_TOKEN,'Accept':'application/vnd.github.v3+json'}});
+    const r=await fetch(FB_URL);
     const j=await r.json();
-    const content=j.files?.['danp.json']?.content;
-    if(content){
-      const d=JSON.parse(content);
-      if(d.drops){
-        S=d; CUR=S.drops.find(d=>d.id===CUR)?CUR:S.drops[0]?.id;
-        localStorage.setItem('danp-dashboard',JSON.stringify(S));
-        dot.className='sdot ok'; stat.textContent='팀 공유 저장소 연결됨 ✓'; stat.className='sstat ok';
-      } else { throw new Error('empty'); }
-    } else { throw new Error('empty'); }
+    if(j && j.drops){
+      S=j; CUR=S.drops.find(d=>d.id===CUR)?CUR:S.drops[0]?.id;
+      localStorage.setItem('danp-dashboard',JSON.stringify(S));
+      dot.className='sdot ok'; stat.textContent='팀 공유 저장소 연결됨 ✓'; stat.className='sstat ok';
+    } else {
+      const local=localStorage.getItem('danp-dashboard');
+      if(local){try{S=JSON.parse(local);}catch(e){S=JSON.parse(JSON.stringify(DEFAULT));}}
+      else{S=JSON.parse(JSON.stringify(DEFAULT));}
+      CUR=S.drops[0]?.id||CUR;
+      await saveData();
+      dot.className='sdot ok'; stat.textContent='저장소 초기화됨 ✓'; stat.className='sstat ok';
+    }
   }catch(e){
     const local=localStorage.getItem('danp-dashboard');
-    if(local){try{S=JSON.parse(local);CUR=S.drops[0]?.id||CUR;
-      dot.className='sdot ok'; stat.textContent='로컬 데이터 로드됨';
-    }catch(e2){S=JSON.parse(JSON.stringify(DEFAULT));}}
-    else{S=JSON.parse(JSON.stringify(DEFAULT)); await saveData();}
-    if(e.message!=='empty') dot.className='sdot err';
+    if(local){try{S=JSON.parse(local);CUR=S.drops[0]?.id||CUR;}catch(e2){}}
+    dot.className='sdot err'; stat.textContent='연결 실패';
   }
   render();
 }
@@ -332,38 +332,31 @@ async function saveData(){
   const slim=JSON.parse(JSON.stringify(S));
   slim.drops?.forEach(d=>d.plans?.forEach(p=>p.slots?.forEach(s=>{delete s.data;})));
   try{
-    const r=await fetch(GIST_URL,{
-      method:'PATCH',
-      headers:{'Authorization':'token '+GIST_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-      body:JSON.stringify({files:{'danp.json':{content:JSON.stringify(slim)}}})
+    const r=await fetch(FB_URL,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(slim)
     });
     if(r.ok){
       dot.className='sdot ok'; stat.textContent='저장됨 ✓'; stat.className='sstat ok';
     } else {
-      const txt=await r.text();
       dot.className='sdot err'; stat.textContent='저장 실패 ('+r.status+')';
-      console.error('gist error', r.status, txt);
     }
   }catch(e){
-    dot.className='sdot err'; stat.textContent='저장 실패 (네트워크)';
-    console.error(e);
+    dot.className='sdot err'; stat.textContent='저장 실패';
   }
 }
 
-// 60초마다 자동 새로고침 (팀원 변경사항 반영)
+// 60초마다 자동 새로고침
 setInterval(async()=>{
   try{
-    const r=await fetch(GIST_URL,{headers:{'Authorization':'token '+GIST_TOKEN,'Accept':'application/vnd.github.v3+json'}});
+    const r=await fetch(FB_URL);
     const j=await r.json();
-    const content=j.files?.['danp.json']?.content;
-    if(content){
-      const d=JSON.parse(content);
-      if(d.drops&&(d._v||0)>(S._v||0)){
-        S=d; CUR=S.drops.find(x=>x.id===CUR)?CUR:S.drops[0]?.id;
-        localStorage.setItem('danp-dashboard',JSON.stringify(S));
-        render();
-        document.getElementById('sstat').textContent='자동 업데이트됨 ✓';
-      }
+    if(j&&j.drops&&(j._v||0)>(S._v||0)){
+      S=j; CUR=S.drops.find(x=>x.id===CUR)?CUR:S.drops[0]?.id;
+      localStorage.setItem('danp-dashboard',JSON.stringify(S));
+      render();
+      document.getElementById('sstat').textContent='자동 업데이트됨 ✓';
     }
   }catch(e){}
 }, 60000);
