@@ -395,17 +395,20 @@ function rUrgent(){
 // ── PLAN ──────────────────────────────────────────────────
 function rPlan(){
   const d=getDrop();
-  const rows=d.plans.map(p=>`
+  const rows=d.plans.map(p=>{
+    const items=p.items||[];
+    const who=Array.isArray(p.who)?p.who.join(', '):(p.who||'');
+    return`
     <div class="prow ${rowCls(p)}">
       <div class="pmain">
-        <div class="pico">${p.ic}</div>
+        <div class="pico">${p.ic||'📄'}</div>
         <div class="pinfo">
           <div class="pnm">${p.nm}</div>
-          <input class="ei who" value="${p.who}" onchange="updP('${p.id}','who',this.value)" title="담당자 수정">
+          <div style="font-size:12px;color:var(--text2)">${who}</div>
         </div>
         <div class="pmeta">
           <span class="tag ${tagCls(p)}">${tagLbl(p)}</span>
-          <input type="date" class="ei date" value="${p.dl}" onchange="updP('${p.id}','dl',this.value)" title="마감일 수정">
+          <input type="date" class="ei date" value="${p.dl||''}" onchange="updP('${p.id}','dl',this.value)" title="마감일 수정">
           <a href="${NOTION_TEMPLATE_PAGE}" target="_blank" style="font-size:11px;padding:4px 11px;border-radius:20px;border:1px solid #2d6a4f;color:#2d6a4f;background:#eaf4ee;text-decoration:none;white-space:nowrap;font-weight:600">⬇ 양식 받기</a>
           <select onchange="setStatus('${p.id}',this.value)" style="font-size:12px;padding:5px 10px;border-radius:20px;border:2px solid ${p.status==='제출완료'?'#2d6a4f':p.status==='일부제출'?'#92400e':'var(--border2)'};background:${p.status==='제출완료'?'#eaf4ee':p.status==='일부제출'?'#fef3c7':'var(--bg)'};color:${p.status==='제출완료'?'#2d6a4f':p.status==='일부제출'?'#92400e':'var(--text2)'};cursor:pointer;font-weight:600;font-family:inherit">
             <option value="미제출" ${p.status==='미제출'?'selected':''}>미제출</option>
@@ -421,9 +424,9 @@ function rPlan(){
         </div>
       </div>
       ${p.notionUrl?`<a href="${p.notionUrl}" target="_blank" style="font-size:11px;color:#1d4ed8;padding:7px 14px;display:inline-block;border-top:1px solid var(--border);font-weight:500">📎 완성본 파일은 노션에 업로드 →</a>`:''}
-      <span class="itoggle" onclick="tiP('${p.id}')">${OI[p.id]?'▲ 숨기기':'▼ 포함 항목 보기'} (${p.items.length}개)</span>
-      <div class="ilist ${OI[p.id]?'on':''}">${p.items.map(it=>`<div class="iitem">${it}</div>`).join('')}</div>
-    </div>`).join('');
+      <span class="itoggle" onclick="tiP('${p.id}')">${OI[p.id]?'▲ 숨기기':'▼ 포함 항목 보기'} (${items.length}개)</span>
+      <div class="ilist ${OI[p.id]?'on':''}">${items.map(it=>`<div class="iitem">${it}</div>`).join('')}</div>
+    </div>`;}).join('');
   document.getElementById('mainView').innerHTML=`
     <div class="shdr"><div class="stitle">기획안 제출</div><div class="sbadge">완성본은 노션에 업로드</div>
       <button class="add-btn" onclick="openAddP()">+ 기획안 추가</button></div>
