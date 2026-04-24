@@ -464,7 +464,7 @@ function updP(pid,k,v){const p=getDrop().plans.find(x=>x.id===pid);if(p)p[k]=v;r
 // ── PERSON ────────────────────────────────────────────────
 function rPerson(){
   const d=getDrop();
-  const people=[...new Set([...d.plans.flatMap(p=>p.who||[]),...d.tasks.map(t=>t.w)])].filter(Boolean);
+  const people=[...new Set([...d.plans.flatMap(p=>Array.isArray(p.who)?p.who:(p.who?[p.who]:[])), ...d.tasks.flatMap(t=>Array.isArray(t.w)?t.w:(t.w?[t.w]:[]))])].filter(Boolean);
   if(!SEL_P||!people.includes(SEL_P))SEL_P=people[0];
   const getMember=name=>S.members.find(m=>m.name===name)||{name,role:''};
   const grid=people.map((name,i)=>{
@@ -1061,15 +1061,14 @@ function doEditT(gi){
 }
 function delT(gi){if(!confirm('삭제?'))return;getDrop().tasks.splice(gi,1);closeM();render();saveData();}
 function openAddT(){
-  const mOpts=S.members.map(m=>`<option value="${m.name}">${m.name} · ${m.role}</option>`).join('');
   const phOpts=(getDrop().phases||PH).map(p=>`<option value="${p.id}">${p.n}</option>`).join('');
   openModal('태스크 추가',`
     <div class="mfield"><label>태스크명</label><input id="m_n" placeholder="태스크명"></div>
     <div class="mfield"><label>담당자</label>
     <div style="display:flex;flex-wrap:wrap;gap:6px;padding:10px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--bg)">
       ${S.members.map(m=>`
-        <label style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12px;background:${tWho.includes(m.name)?'var(--text)':'var(--bg)'};color:${tWho.includes(m.name)?'#fff':'var(--text2)'}">
-          <input type="checkbox" name="t_who" value="${m.name}" ${tWho.includes(m.name)?'checked':''} style="display:none"
+        <label style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12px;background:var(--bg);color:var(--text2)">
+          <input type="checkbox" name="t_who" value="${m.name}" style="display:none"
             onchange="this.closest('label').style.background=this.checked?'var(--text)':'var(--bg)';this.closest('label').style.color=this.checked?'#fff':'var(--text2)'">
           ${m.name} <span style="font-size:10px;opacity:.6">${m.role}</span>
         </label>`).join('')}
@@ -1082,7 +1081,8 @@ function openAddT(){
 }
 function doAddT(){
   const n=document.getElementById('m_n').value;if(!n)return;
-  getDrop().tasks.push({id:uid(),ph:document.getElementById('m_ph').value,n,w:document.getElementById('m_w').value,t:'design',d:document.getElementById('m_d').value,s:'시작 전'});
+  const who=Array.from(document.querySelectorAll('input[name=t_who]:checked')).map(o=>o.value);
+  getDrop().tasks.push({id:uid(),ph:document.getElementById('m_ph').value,n,w:who.length?who:'',t:'design',d:document.getElementById('m_d').value,s:'시작 전'});
   closeM();render();saveData();
 }
 
