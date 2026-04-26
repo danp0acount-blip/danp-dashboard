@@ -600,15 +600,11 @@ function dlUploaded(pid,si){
   a.download=stored.name;
   a.click();
 }
-function moveTask(gi,dir){
+function moveTask(realGi,dir){
   const d=getDrop();
-  const tasks=AP==='all'?d.tasks:d.tasks.filter(t=>t.ph===AP);
-  const t=tasks[gi];
-  const realGi=d.tasks.indexOf(t);
   const j=realGi+dir;
   if(j<0||j>=d.tasks.length)return;
-  // 같은 단계 내에서만 이동 (AP 필터 적용 중일 때)
-  if(AP!=='all'&&d.tasks[j].ph!==AP)return;
+  if(AP!=='all'&&d.tasks[j].ph!==d.tasks[realGi].ph)return;
   [d.tasks[realGi],d.tasks[j]]=[d.tasks[j],d.tasks[realGi]];
   render();saveData();
 }
