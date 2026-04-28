@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디자인 기획서 양식</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #E8F4FB;
+    --navy: #0D1B2E;
+    --navy-mid: #152840;
+    --navy-card: #1B3254;
+    --blue: #1565C0;
+    --blue-lt: #D0E8F8;
+    --blue-mid: #3A80C0;
+    --accent: #4FC3F7;
+    --white: #FFFFFF;
+    --text-dark: #0D1B2E;
+    --text-mid: #2A4A6A;
+    --text-lt: #6A8DAA;
+    --border: #B0D4EC;
+    --input-bg: #F5FAFD;
+    --row-alt: #EBF5FB;
+    --shadow: 0 2px 12px rgba(13,27,46,0.10);
+    --shadow-card: 0 4px 24px rgba(13,27,46,0.13);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding-bottom: 100px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    border-bottom: 3px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 56px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.25);
+  }
+  .site-header .logo {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: .5px;
+  }
+  .site-header .logo span { color: var(--accent); }
+
+  .nav-pills {
+    display: flex;
+    gap: 4px;
+  }
+  .nav-pills a {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,.55);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .nav-pills a:hover { color: #fff; background: rgba(255,255,255,.1); }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .btn-print {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--accent);
+    border: none;
+    border-radius: 20px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .3px;
+  }
+  .btn-print:hover { background: #81D4FA; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1A3560 100%);
+    padding: 48px 32px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto 0;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-meta input {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 4px;
+    color: rgba(255,255,255,.85);
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 4px 10px;
+    width: 130px;
+    outline: none;
+    transition: border .2s;
+  }
+  .hero-meta input::placeholder { color: rgba(255,255,255,.3); }
+  .hero-meta input:focus { border-color: var(--accent); }
+  .hero-meta .sep { color: rgba(255,255,255,.3); font-size: 12px; }
+
+  .hero-title {
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,.6);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .hero-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .hero-toc-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero-toc { list-style: none; }
+  .hero-toc li {
+    font-size: 13px;
+    color: rgba(255,255,255,.75);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .hero-toc li .num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 18px;
+  }
+
+  .hero-image-box {
+    background: rgba(255,255,255,.05);
+    border: 1px dashed rgba(255,255,255,.2);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px;
+    min-height: 240px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-box:hover { border-color: var(--accent); background: rgba(79,195,247,.07); }
+  .hero-image-box img { width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0; border-radius: var(--radius); background: #0B1825; }
+  .hero-image-box .img-label {
+    font-size: 13px;
+    color: rgba(255,255,255,.4);
+    font-style: italic;
+    text-align: center;
+    pointer-events: none;
+  }
+  .hero-image-box .upload-icon {
+    font-size: 28px;
+    pointer-events: none;
+  }
+  .hero-image-box input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main { max-width: 1200px; margin: 0 auto; padding: 32px 32px 0; }
+
+  /* ── SECTION WRAPPER ── */
+  .form-section {
+    margin-bottom: 36px;
+    animation: fadeUp .4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .section-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+  .section-sub {
+    font-size: 12px;
+    color: var(--text-lt);
+    font-style: italic;
+    margin-bottom: 16px;
+    padding-left: 36px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--navy-card);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 14px;
+    letter-spacing: .3px;
+  }
+  .card-body { padding: 14px; }
+
+  /* ── INPUT STYLES ── */
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12.5px;
+    color: var(--text-dark);
+    padding: 8px 11px;
+    outline: none;
+    transition: border .2s, box-shadow .2s;
+    resize: vertical;
+  }
+  input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: var(--blue-mid);
+    box-shadow: 0 0 0 3px rgba(21,101,192,.12);
+  }
+  input[type="text"]::placeholder, textarea::placeholder { color: var(--text-lt); }
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 5px;
+    letter-spacing: .2px;
+  }
+  .field { margin-bottom: 12px; }
+  .field:last-child { margin-bottom: 0; }
+
+  /* ── SECTION 1: 시즌 방향성 ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .color-swatch-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .color-swatch-row:last-of-type { border-bottom: none; }
+  .color-swatch-box {
+    width: 52px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .swatch-input-wrap { flex: 1; }
+  .swatch-input-wrap input { font-size: 11.5px; }
+
+  .note-box {
+    background: var(--blue-lt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-top: 10px;
+  }
+  .note-box label { color: var(--blue); }
+  .note-box textarea { background: var(--white); min-height: 60px; }
+
+  /* ── SECTION 2: SKU TABLE ── */
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .sku-table thead tr {
+    background: var(--blue);
+    color: var(--white);
+  }
+  .sku-table th {
+    padding: 9px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .sku-table td { padding: 0; border: 1px solid #D8EAF4; }
+  .sku-table tbody tr:nth-child(even) { background: var(--row-alt); }
+  .sku-table tbody tr:hover { background: #DCF0FA; }
+  .sku-table td input[type="text"] {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    padding: 7px 8px;
+    font-size: 12px;
+  }
+  .sku-table td input[type="text"]:focus {
+    background: #EBF7FF;
+    box-shadow: inset 0 0 0 2px var(--blue-mid);
+  }
+  .sku-table .num-cell {
+    width: 40px;
+    text-align: center;
+    color: var(--text-mid);
+    font-weight: 600;
+    padding: 7px 0;
+    font-size: 12px;
+  }
+  .sku-note-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    gap: 16px;
+  }
+  .sku-note-bar .note-text {
+    font-size: 11px;
+    color: var(--text-lt);
+    font-style: italic;
+  }
+  .sku-summary {
+    background: var(--blue-lt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--text-mid);
+    white-space: nowrap;
+  }
+  .sku-summary input {
+    display: inline;
+    width: 180px;
+    margin-left: 6px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    border-radius: 0;
+    padding: 2px 4px;
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  /* ── SECTION 3: 디자인 근거 ── */
+  .rationale-section { margin-bottom: 20px; }
+  .step-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .step-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    color: var(--text-lt);
+    background: var(--white);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .step-pill.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--white);
+  }
+
+  .concept-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .concept-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: .3px;
+    white-space: nowrap;
+  }
+  .concept-divider {
+    width: 1.5px;
+    height: 24px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+  .concept-bar input { font-size: 12.5px; }
+
+  .rationale-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 14px;
+  }
+  .rationale-fields { display: flex; flex-direction: column; gap: 12px; }
+  .rationale-field-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .rationale-field-card .field-header {
+    background: var(--navy-card);
+    color: rgba(255,255,255,.9);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 7px 13px;
+    letter-spacing: .2px;
+  }
+  .rationale-field-card textarea {
+    border: none;
+    border-radius: 0;
+    resize: none;
+    min-height: 90px;
+    background: var(--white);
+    font-size: 12.5px;
+  }
+  .rationale-field-card textarea:focus { box-shadow: inset 0 0 0 2px var(--blue-mid); }
+
+  .ref-image-box {
+    background: var(--blue-lt);
+    border: 1px dashed var(--blue-mid);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all .2s;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ref-image-box:hover { border-color: var(--blue); background: #C5E3F5; }
+  .ref-image-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: #0B1825; }
+  .ref-image-box .img-hint { font-size: 12px; color: var(--text-lt); font-style: italic; text-align: center; pointer-events: none; z-index: 1; }
+  .ref-image-box .upload-icon { font-size: 24px; pointer-events: none; z-index: 1; }
+  .ref-image-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; z-index: 2; }
+  .ref-url-input { margin-top: 8px; }
+  .ref-url-input input { font-size: 11.5px; border-radius: 0 0 var(--radius) var(--radius); border-top: 1px dashed var(--border); }
+
+  /* ── SECTION 4: 코디 방향 ── */
+  .codi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .codi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .codi-image-box {
+    background: var(--navy-mid);
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .codi-image-box:hover { background: var(--navy-card); }
+  .codi-image-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0B1825; }
+  .codi-image-box .img-hint { font-size: 11px; color: rgba(255,255,255,.4); font-style: italic; text-align: center; pointer-events: none; z-index: 1; }
+  .codi-image-box .upload-icon { font-size: 22px; pointer-events: none; z-index: 1; }
+  .codi-image-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; z-index: 2; }
+  .codi-desc { padding: 10px 12px; }
+  .codi-desc-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 6px;
+  }
+  .codi-desc textarea { min-height: 70px; font-size: 11.5px; resize: none; }
+
+  .codi-summary-bar {
+    background: var(--blue-lt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .codi-summary-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--blue);
+    white-space: nowrap;
+  }
+  .codi-summary-bar input { font-size: 12.5px; }
+
+  /* ── SECTION 5: 최종 정리 ── */
+  .final-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .summary-row {
+    display: grid;
+    grid-template-columns: 148px 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .summary-label {
+    background: var(--blue-lt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+  }
+  .summary-row input { font-size: 12.5px; }
+
+  .checklist { list-style: none; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--blue-mid);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s;
+    background: var(--white);
+  }
+  .check-item.checked .check-box {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .check-item.checked .check-box::after {
+    content: '✓';
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .check-text {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    transition: color .15s;
+  }
+  .check-item.checked .check-text {
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  /* ── FOOTER ── */
+  .form-footer {
+    background: var(--navy);
+    margin-top: 48px;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .form-footer .foot-left { font-size: 12px; color: rgba(255,255,255,.4); }
+  .form-footer .foot-actions { display: flex; gap: 10px; }
+  .btn-secondary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 20px;
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-secondary:hover { color: #fff; background: rgba(255,255,255,.15); }
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--accent);
+    border: none;
+    border-radius: 20px;
+    padding: 7px 20px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-primary:hover { background: #81D4FA; transform: translateY(-1px); }
+
+
+  /* ── EDITABLE ELEMENTS ── */
+  [contenteditable="true"] {
+    outline: none;
+    cursor: text;
+    border-radius: 3px;
+    transition: background .15s, box-shadow .15s;
+    position: relative;
+  }
+  [contenteditable="true"]:hover {
+    background: rgba(21,101,192,.07) !important;
+    box-shadow: 0 0 0 2px rgba(21,101,192,.18);
+  }
+  [contenteditable="true"]:focus {
+    background: rgba(21,101,192,.11) !important;
+    box-shadow: 0 0 0 2px rgba(21,101,192,.4);
+  }
+  /* 편집 가능 표시 배지 */
+  [contenteditable="true"]:hover::after {
+    content: "✎";
+    position: absolute;
+    top: -8px;
+    right: -6px;
+    font-size: 10px;
+    color: var(--blue);
+    background: white;
+    border-radius: 3px;
+    padding: 0 2px;
+    pointer-events: none;
+    line-height: 1.4;
+  }
+  /* card-header, field-header 내부에선 after 숨김 (overflow:hidden) */
+  .card-header[contenteditable="true"]:hover::after,
+  .field-header[contenteditable="true"]:hover::after { display:none; }
+
+
+  /* ── SHEET TAB BAR (TOP) ── */
+  #sheet-bar {
+    position: sticky;
+    top: 56px;            /* site-header 높이 아래 */
+    z-index: 99;
+    background: #0B1825;
+    border-bottom: 3px solid #1565C0;
+    display: flex;
+    align-items: stretch;
+    height: 58px;
+    padding: 0 20px;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #1565C0 transparent;
+  }
+  #sheet-bar::-webkit-scrollbar { height: 3px; }
+  #sheet-bar::-webkit-scrollbar-thumb { background: #1565C0; border-radius: 2px; }
+
+  #sheet-tabs {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 10px 0;
+  }
+  #sheet-tabs::-webkit-scrollbar { display: none; }
+
+  .sheet-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: rgba(255,255,255,.52);
+    background: rgba(255,255,255,.07);
+    border: 1.5px solid rgba(255,255,255,.1);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .18s;
+    position: relative;
+    min-width: 130px;
+    max-width: 220px;
+    user-select: none;
+    flex-shrink: 0;
+    height: 38px;
+  }
+  .sheet-tab:hover {
+    background: rgba(255,255,255,.13);
+    color: rgba(255,255,255,.85);
+    border-color: rgba(255,255,255,.22);
+    transform: translateY(-1px);
+  }
+  .sheet-tab.active {
+    background: #1565C0;
+    color: #fff;
+    font-weight: 700;
+    border-color: #1565C0;
+    box-shadow: 0 -3px 12px rgba(21,101,192,.45);
+    transform: translateY(-2px);
+  }
+  .sheet-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: -1px; right: -1px;
+    height: 3px;
+    background: #4FC3F7;
+    border-radius: 0 0 2px 2px;
+  }
+
+  /* 탭 이름 — 직접 편집 가능 */
+  .sheet-tab-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    outline: none;
+    border-radius: 4px;
+    padding: 2px 4px;
+    transition: background .15s;
+    cursor: text;
+    font-size: 13.5px;
+  }
+  .sheet-tab-name[contenteditable="true"] {
+    background: rgba(255,255,255,.15);
+    cursor: text;
+    min-width: 60px;
+  }
+
+  /* 편집 아이콘 (탭 호버 시) */
+  .sheet-tab:not(.active) .sheet-tab-edit-hint {
+    font-size: 10px;
+    color: rgba(255,255,255,.28);
+    flex-shrink: 0;
+  }
+  .sheet-tab.active .sheet-tab-edit-hint { display: none; }
+
+  .sheet-tab-del {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.25);
+    background: transparent;
+    color: rgba(255,255,255,.45);
+    font-size: 11px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+    transition: all .15s;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .sheet-tab-del:hover { background: rgba(220,50,50,.5); border-color: #e57373; color: #fff; }
+  .sheet-tab.active .sheet-tab-del { border-color: rgba(255,255,255,.4); color: rgba(255,255,255,.7); }
+  .sheet-tab.active .sheet-tab-del:hover { background: rgba(220,50,50,.5); border-color: #e57373; color: #fff; }
+
+  /* 시트 추가 버튼 */
+  #sheet-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 20px;
+    height: 38px;
+    align-self: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0D1B2E;
+    background: #4FC3F7;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .18s;
+    flex-shrink: 0;
+    letter-spacing: .3px;
+    white-space: nowrap;
+  }
+  #sheet-add-btn:hover {
+    background: #81D4FA;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79,195,247,.4);
+  }
+  #sheet-add-btn:active { transform: translateY(0); }
+
+  /* 힌트 텍스트 */
+  .sheet-hint {
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 14px;
+    border-left: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .sheet-hint span {
+    font-size: 11px;
+    color: rgba(255,255,255,.28);
+    white-space: nowrap;
+  }
+
+  /* body에 시트바 공간 있으니 상단 여백 조정 */
+  body { padding-bottom: 24px; }
+
+  @media print { #sheet-bar { display: none !important; } }
+
+
+  /* ── IMAGE UPLOAD AREA ── */
+  .img-wrap-outer {
+    position: relative;
+  }
+  /* 이미지 로드 전: file input 레이블 전체 클릭 가능 */
+  .img-upload-label {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+  .img-upload-label input[type="file"] {
+    display: none;
+  }
+  /* 업로드된 이미지 */
+  .img-preview-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .img-preview-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+  }
+  /* 호버 시 오버레이 */
+  .img-preview-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background .2s;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .img-preview-wrap:hover::before {
+    background: rgba(0,0,0,.35);
+  }
+  /* 삭제 버튼 */
+  .img-del-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.8);
+    background: rgba(0,0,0,.6);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+    transition: all .15s;
+    backdrop-filter: blur(6px);
+    z-index: 20;
+    opacity: 0;
+  }
+  .img-preview-wrap:hover .img-del-btn {
+    opacity: 1;
+  }
+  .img-del-btn:hover {
+    background: rgba(210,30,30,.85);
+    border-color: #fff;
+    transform: scale(1.12);
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .site-header, .header-actions, .form-footer, .nav-pills { display: none !important; }
+    body { background: white; padding: 0; }
+    .hero { background: #1B3254 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card, .rationale-field-card, .codi-card { break-inside: avoid; }
+    .form-section { break-inside: avoid; }
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .rationale-grid { grid-template-columns: 1fr; }
+    
+    .final-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+
+  <div id="edit-banner" style="
+    background: linear-gradient(90deg,#1565C0,#1E88E5);
+    color:white;
+    font-family:'DM Sans',sans-serif;
+    font-size:12.5px;
+    padding:8px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  ">
+    <span>✎&nbsp; <strong>텍스트를 직접 클릭해서 수정</strong>할 수 있습니다 — 제목, 라벨, 항목명 모두 편집 가능</span>
+    <button onclick="this.parentElement.remove()" style="background:rgba(255,255,255,.2);border:none;color:white;font-size:11px;padding:3px 10px;border-radius:10px;cursor:pointer;">닫기</button>
+  </div>
+<header class="site-header">
+  <div class="logo">Design<span>Brief</span></div>
+  <nav class="nav-pills">
+    <a href="#sec1">시즌 방향성</a>
+    <a href="#sec2">SKU 계획</a>
+    <a href="#sec3">디자인 근거</a>
+    <a href="#sec4">코디 방향</a>
+    <a href="#sec5">최종 정리</a>
+  </nav>
+  <div class="header-actions" style="gap:12px;">
+    <div id="save-status" style="
+      display:flex; align-items:center; gap:6px;
+      font-family:'DM Sans',sans-serif; font-size:11.5px;
+      color:rgba(255,255,255,.45); white-space:nowrap;
+      transition: color .3s;
+    ">
+      <span id="save-dot" style="
+        width:7px; height:7px; border-radius:50%;
+        background:rgba(255,255,255,.25);
+        display:inline-block; flex-shrink:0;
+        transition: background .3s;
+      "></span>
+      <span id="save-text">저장됨</span>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+  </div>
+</header>
+
+<!-- EXCEL SHEET TAB BAR (상단 고정) -->
+<div id="sheet-bar">
+  <div id="sheet-tabs"></div>
+  <button id="sheet-add-btn" onclick="sheetAdd()">＋ 시트 추가</button>
+  <div class="sheet-hint">
+    <span>탭 클릭 전환 · 이름 클릭 수정 · ✕ 삭제</span>
+  </div>
+</div>
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-meta">
+      <input type="text" placeholder="브랜드명" id="meta-brand">
+      <span class="sep">|</span>
+      <input type="text" placeholder="시즌 (예: 26SS)">
+      <span class="sep">|</span>
+      <input type="text" placeholder="드랍 타이틀">
+      <span class="sep">|</span>
+      <input type="text" placeholder="리드 담당자">
+    </div>
+    <h1 class="hero-title" contenteditable="true" spellcheck="false">디자인<br>기획서</h1>
+
+    <div class="hero-divider"></div>
+    <p class="hero-toc-title">구성 안내</p>
+    <ul class="hero-toc">
+      <li><span class="num">1.</span> <span contenteditable="true" spellcheck="false">시즌 컬러 / 소재 / 부자재</span></li>
+      <li><span class="num">2.</span> <span contenteditable="true" spellcheck="false">시즌 SKU</span></li>
+      <li><span class="num">3.</span> <span contenteditable="true" spellcheck="false">상품 디자인 근거</span></li>
+      <li><span class="num">4.</span> <span contenteditable="true" spellcheck="false">코디 방향</span></li>
+      <li><span class="num">5.</span> <span contenteditable="true" spellcheck="false">최종 정리</span></li>
+    </ul>
+  </div>
+  <div class="hero-image-box" id="hero-img-wrap">
+    <span class="upload-icon">🖼</span>
+    <p class="img-label">브랜드 무드 이미지<br>또는 대표 착장 컷 삽입</p>
+    <input type="file" accept="image/*" onchange="previewImage(this,'hero-img-wrap')">
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main" id="form-root">
+
+  <!-- ── SECTION 1 ── -->
+  <section class="form-section" id="sec1">
+    <div class="section-header">
+      <span class="section-num" contenteditable="true" spellcheck="false">1.</span>
+      <span class="section-title" contenteditable="true" spellcheck="false">시즌 방향성</span>
+    </div>
+    
+
+    <div class="grid-3">
+      <!-- 컬러 -->
+      <div class="card">
+        <div class="card-header" contenteditable="true" spellcheck="false">시즌 컬러</div>
+        <div class="card-body">
+          <div id="color-rows">
+            <div class="color-swatch-row">
+              <input type="color" class="color-swatch-box" value="#B59A7A">
+              <div class="swatch-input-wrap">
+                <input type="text" placeholder="컬러명 / HEX / 포인트">
+              </div>
+            </div>
+            <div class="color-swatch-row">
+              <input type="color" class="color-swatch-box" value="#8C9E8A">
+              <div class="swatch-input-wrap">
+                <input type="text" placeholder="컬러명 / HEX / 포인트">
+              </div>
+            </div>
+            <div class="color-swatch-row">
+              <input type="color" class="color-swatch-box" value="#4A5260">
+              <div class="swatch-input-wrap">
+                <input type="text" placeholder="컬러명 / HEX / 포인트">
+              </div>
+            </div>
+            <div class="color-swatch-row">
+              <input type="color" class="color-swatch-box" value="#D4C5B0">
+              <div class="swatch-input-wrap">
+                <input type="text" placeholder="컬러명 / HEX / 포인트">
+              </div>
+            </div>
+          </div>
+          <div class="note-box">
+            <label contenteditable="true" spellcheck="false">컬러 운용 방향</label>
+            <textarea placeholder="예) 뉴트럴 베이스 + 포인트 컬러&#10;메인 / 서브 / 포인트 비중" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 소재 -->
+      <div class="card">
+        <div class="card-header" contenteditable="true" spellcheck="false">시즌 소재</div>
+        <div class="card-body">
+          <div class="field"><label contenteditable="true" spellcheck="false">주요 소재 1</label><input type="text" placeholder="소재명  /  특징  /  사용 아이템"></div>
+          <textarea placeholder="상세 설명" rows="2" style="margin-bottom:10px"></textarea>
+          <div class="field"><label contenteditable="true" spellcheck="false">주요 소재 2</label><input type="text" placeholder="소재명  /  특징  /  사용 아이템"></div>
+          <textarea placeholder="상세 설명" rows="2" style="margin-bottom:10px"></textarea>
+          <div class="field"><label contenteditable="true" spellcheck="false">주요 소재 3</label><input type="text" placeholder="소재명  /  특징  /  사용 아이템"></div>
+          <textarea placeholder="상세 설명" rows="2" style="margin-bottom:10px"></textarea>
+          <div class="note-box">
+            <label contenteditable="true" spellcheck="false">소재 방향 메모</label>
+            <textarea placeholder="터치감 / 계절감 / 기능성 / 원가 포인트" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 부자재 -->
+      <div class="card">
+        <div class="card-header" contenteditable="true" spellcheck="false">시즌 부자재</div>
+        <div class="card-body">
+          <div class="field"><label contenteditable="true" spellcheck="false">부자재 1</label><input type="text" placeholder="예) 지퍼 / 스토퍼 / 라벨"></div>
+          <textarea placeholder="상세 설명" rows="2" style="margin-bottom:10px"></textarea>
+          <div class="field"><label contenteditable="true" spellcheck="false">부자재 2</label><input type="text" placeholder="예) 밴드 / 패드 / 금속장식"></div>
+          <textarea placeholder="상세 설명" rows="2" style="margin-bottom:10px"></textarea>
+          <div class="field"><label contenteditable="true" spellcheck="false">부자재 3</label><input type="text" placeholder="컬러 / 마감 / 포인트"></div>
+          <textarea placeholder="상세 설명" rows="2" style="margin-bottom:10px"></textarea>
+          <div class="note-box">
+            <label contenteditable="true" spellcheck="false">부자재 선정 근거</label>
+            <textarea placeholder="디자인성 / 기능성 / 원가" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2 ── -->
+  <section class="form-section" id="sec2">
+    <div class="section-header">
+      <span class="section-num" contenteditable="true" spellcheck="false">2.</span>
+      <span class="section-title" contenteditable="true" spellcheck="false">시즌 SKU 계획</span>
+    </div>
+    
+    <div class="card" style="overflow-x:auto">
+      <table class="sku-table">
+        <thead>
+          <tr>
+            <th style="width:36px">No.</th>
+            <th style="width:120px">카테고리</th>
+            <th>상품명</th>
+            <th style="width:90px">컬러</th>
+            <th style="width:80px">사이즈</th>
+            <th style="width:70px">수량</th>
+            <th style="width:180px">디자인 포인트</th>
+            <th style="width:110px">비고</th>
+            <th style="width:36px; text-align:center;">삭제</th>
+          </tr>
+        </thead>
+        <tbody id="sku-body"></tbody>
+      </table>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+      <span style="font-size:12px; color:var(--text-lt);">현재 <strong id="sku-count">12</strong>개 행</span>
+      <button onclick="skuAddRow()" style="
+        font-family:'DM Sans',sans-serif; font-size:12.5px; font-weight:700;
+        color:white; background:var(--blue); border:none; border-radius:20px;
+        padding:7px 20px; cursor:pointer; transition:background .2s;
+      " onmouseover="this.style.background='#1976D2'" onmouseout="this.style.background='var(--blue)'">
+        ＋ 행 추가
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ── SECTION 3 ── -->
+  <section class="form-section" id="sec3">
+    <div class="section-header">
+      <span class="section-num" contenteditable="true" spellcheck="false">3.</span>
+      <span class="section-title" contenteditable="true" spellcheck="false">상품 디자인 근거</span>
+    </div>
+    
+
+    <!-- 개념 바 -->
+    <div class="concept-bar">
+      <span class="concept-label" contenteditable="true" spellcheck="false">핵심 컨셉</span>
+      <div class="concept-divider"></div>
+      <input type="text" placeholder="드랍의 핵심 디자인 컨셉  /  무드  /  키워드 입력" style="flex:1">
+    </div>
+
+    <!-- 4 sub-sections -->
+    <div id="rationale-panels">
+
+      <!-- 3-1 시장/트렌드 -->
+      <div class="rationale-section">
+        <div class="step-bar">
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-1. 시장 / 트렌드 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-2. 고객 / 판매 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-3. 경쟁사 / 레퍼런스</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-4. 디자인 적용 포인트</span>
+        </div>
+        <div class="rationale-grid">
+          <div class="rationale-fields">
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">트렌드 키워드</div>
+              <textarea placeholder="이번 시즌 주요 트렌드 키워드  /  예) 오버사이즈, 어스톤, 레이어드" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">시장 데이터</div>
+              <textarea placeholder="관련 판매 통계 / 트렌드 리포트 출처 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">디자인 연결점</div>
+              <textarea placeholder="트렌드를 이번 상품에 어떻게 반영했는지 입력" rows="4"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="ref-image-box" id="ref1-wrap">
+              <span class="upload-icon">📷</span>
+              <p class="img-hint" contenteditable="true" spellcheck="false">레퍼런스 이미지 첨부</p>
+              <input type="file" accept="image/*" onchange="previewImage(this,'ref1-wrap')">
+            </div>
+            <div class="ref-url-input">
+              <input type="text" placeholder="또는 이미지 URL 기입" style="border-radius:0 0 8px 8px">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-2 고객/판매 -->
+      <div class="rationale-section">
+        <div class="step-bar">
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-1. 시장 / 트렌드 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-2. 고객 / 판매 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-3. 경쟁사 / 레퍼런스</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-4. 디자인 적용 포인트</span>
+        </div>
+        <div class="rationale-grid">
+          <div class="rationale-fields">
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">타겟 고객</div>
+              <textarea placeholder="연령 / 라이프스타일 / 구매 패턴 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">판매 데이터</div>
+              <textarea placeholder="전 시즌 베스트 품목 / 수요 패턴 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">고객 니즈</div>
+              <textarea placeholder="VOC / 리뷰 / CS 데이터 기반 니즈 입력" rows="4"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="ref-image-box" id="ref2-wrap">
+              <span class="upload-icon">📷</span>
+              <p class="img-hint" contenteditable="true" spellcheck="false">레퍼런스 이미지 첨부</p>
+              <input type="file" accept="image/*" onchange="previewImage(this,'ref2-wrap')">
+            </div>
+            <div class="ref-url-input">
+              <input type="text" placeholder="또는 이미지 URL 기입" style="border-radius:0 0 8px 8px">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-3 경쟁사 -->
+      <div class="rationale-section">
+        <div class="step-bar">
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-1. 시장 / 트렌드 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-2. 고객 / 판매 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-3. 경쟁사 / 레퍼런스</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-4. 디자인 적용 포인트</span>
+        </div>
+        <div class="rationale-grid">
+          <div class="rationale-fields">
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">경쟁사 현황</div>
+              <textarea placeholder="주요 경쟁 브랜드 및 유사 상품 현황 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">차별화 포인트</div>
+              <textarea placeholder="경쟁사 대비 우리 상품의 강점 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">벤치마크</div>
+              <textarea placeholder="참고한 레퍼런스 브랜드 / 컬렉션 입력" rows="4"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="ref-image-box" id="ref3-wrap">
+              <span class="upload-icon">📷</span>
+              <p class="img-hint" contenteditable="true" spellcheck="false">레퍼런스 이미지 첨부</p>
+              <input type="file" accept="image/*" onchange="previewImage(this,'ref3-wrap')">
+            </div>
+            <div class="ref-url-input">
+              <input type="text" placeholder="또는 이미지 URL 기입" style="border-radius:0 0 8px 8px">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-4 디자인 적용 -->
+      <div class="rationale-section">
+        <div class="step-bar">
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-1. 시장 / 트렌드 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-2. 고객 / 판매 근거</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-3. 경쟁사 / 레퍼런스</span>
+          <span class="step-pill" contenteditable="true" spellcheck="false">3-4. 디자인 적용 포인트</span>
+        </div>
+        <div class="rationale-grid">
+          <div class="rationale-fields">
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">실루엣 / 핏</div>
+              <textarea placeholder="적용한 실루엣 방향 및 핏 설명 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">컬러 / 소재</div>
+              <textarea placeholder="선택 이유 및 시즌 적합성 입력" rows="4"></textarea>
+            </div>
+            <div class="rationale-field-card">
+              <div class="field-header" contenteditable="true" spellcheck="false">디테일 포인트</div>
+              <textarea placeholder="차별화 디테일 및 기능성 포인트 입력" rows="4"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="ref-image-box" id="ref4-wrap">
+              <span class="upload-icon">📷</span>
+              <p class="img-hint" contenteditable="true" spellcheck="false">레퍼런스 이미지 첨부</p>
+              <input type="file" accept="image/*" onchange="previewImage(this,'ref4-wrap')">
+            </div>
+            <div class="ref-url-input">
+              <input type="text" placeholder="또는 이미지 URL 기입" style="border-radius:0 0 8px 8px">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /#rationale-panels -->
+  </section>
+
+  <!-- ── SECTION 4 ── -->
+  <section class="form-section" id="sec4">
+    <div class="section-header">
+      <span class="section-num" contenteditable="true" spellcheck="false">4.</span>
+      <span class="section-title" contenteditable="true" spellcheck="false">코디 방향</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:16px;">
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi1-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 1</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi1-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi2-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 2</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi2-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi3-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 3</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi3-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi4-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 4</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi4-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi5-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 5</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi5-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi6-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 6</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi6-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi7-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 7</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi7-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+      <div class="codi-card">
+        <div class="codi-image-box" id="codi8-wrap">
+          <span class="upload-icon">📷</span>
+          <p class="img-hint" contenteditable="true" spellcheck="false">착장 이미지 8</p>
+          <input type="file" accept="image/*" onchange="previewImage(this,'codi8-wrap')">
+        </div>
+        <div class="codi-desc">
+          <div class="codi-desc-title" contenteditable="true" spellcheck="false">코디 설명</div>
+          <textarea placeholder="아이템 조합&#10;착장 포인트&#10;스타일링 키워드"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="codi-summary-bar">
+      <span class="codi-summary-label" contenteditable="true" spellcheck="false">전체 코디 방향 요약 :</span>
+      <input type="text" placeholder="메인 타깃  /  착장 상황  /  스타일링 무드" style="flex:1">
+    </div>
+  </section>
+
+  <!-- ── SECTION 5 ── -->
+  <section class="form-section" id="sec5">
+    <div class="section-header">
+      <span class="section-num" contenteditable="true" spellcheck="false">5.</span>
+      <span class="section-title" contenteditable="true" spellcheck="false">최종 정리</span>
+    </div>
+    
+
+    <div class="final-grid" style="grid-template-columns:1fr">
+      <!-- 핵심 요약 -->
+      <div class="card">
+        <div class="card-header" contenteditable="true" spellcheck="false">이번 드랍 핵심 요약</div>
+        <div class="card-body">
+          <div class="summary-row">
+            <span class="summary-label" contenteditable="true" spellcheck="false">시즌 핵심 키워드</span>
+            <input type="text" placeholder="입력">
+          </div>
+          <div class="summary-row">
+            <span class="summary-label" contenteditable="true" spellcheck="false">핵심 컬러 / 소재</span>
+            <input type="text" placeholder="입력">
+          </div>
+          <div class="summary-row">
+            <span class="summary-label" contenteditable="true" spellcheck="false">메인 SKU</span>
+            <input type="text" placeholder="입력">
+          </div>
+          <div class="summary-row">
+            <span class="summary-label" contenteditable="true" spellcheck="false">차별화 포인트</span>
+            <input type="text" placeholder="입력">
+          </div>
+          <div class="summary-row">
+            <span class="summary-label" contenteditable="true" spellcheck="false">기대 효과</span>
+            <input type="text" placeholder="입력">
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="form-footer">
+  <span class="foot-left">디자인 기획서 양식 · 브라우저에서 바로 작성 가능합니다</span>
+  <div class="foot-actions">
+    <button class="btn-secondary" onclick="clearAll()">전체 초기화</button>
+    <button class="btn-primary" onclick="window.print()">🖨 PDF 저장 / 인쇄</button>
+  </div>
+</footer>
+
+
+
+<script>
+// ── SKU Table ───────────────────────────────────────────
+const skuCols = ['카테고리','상품명','컬러','사이즈','수량','디자인 포인트','비고'];
+const tbody = document.getElementById('sku-body');
+
+function skuUpdateNums() {
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach((tr, i) => {
+    const nc = tr.querySelector('.num-cell');
+    if (nc) nc.textContent = i + 1;
+  });
+  const cnt = document.getElementById('sku-count');
+  if (cnt) cnt.textContent = rows.length;
+}
+
+function skuMakeRow() {
+  const tr = document.createElement('tr');
+
+  // 번호 셀
+  const td0 = document.createElement('td');
+  td0.className = 'num-cell';
+  tr.appendChild(td0);
+
+  // 입력 셀
+  skuCols.forEach(() => {
+    const td = document.createElement('td');
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    td.appendChild(inp);
+    tr.appendChild(td);
+  });
+
+  // 삭제 버튼 셀
+  const tdDel = document.createElement('td');
+  tdDel.style.cssText = 'text-align:center; padding:4px;';
+  const btn = document.createElement('button');
+  btn.innerHTML = '✕';
+  btn.title = '이 행 삭제';
+  btn.style.cssText = [
+    'background:none', 'border:1.5px solid #B0D4EC', 'border-radius:50%',
+    'width:22px', 'height:22px', 'font-size:10px', 'color:#6A8DAA',
+    'cursor:pointer', 'line-height:1', 'display:flex',
+    'align-items:center', 'justify-content:center', 'transition:all .15s',
+    'font-weight:700', 'margin:auto'
+  ].join(';');
+  btn.onmouseover = () => { btn.style.background='#FFECEC'; btn.style.borderColor='#E57373'; btn.style.color='#C62828'; };
+  btn.onmouseout  = () => { btn.style.background='none'; btn.style.borderColor='#B0D4EC'; btn.style.color='#6A8DAA'; };
+  btn.onclick = () => {
+    if (tbody.querySelectorAll('tr').length <= 1) return;
+    if (!confirm('이 행을 삭제하시겠습니까?')) return;
+    tr.remove();
+    skuUpdateNums();
+  };
+  tdDel.appendChild(btn);
+  tr.appendChild(tdDel);
+
+  return tr;
+}
+
+function skuAddRow() {
+  tbody.appendChild(skuMakeRow());
+  skuUpdateNums();
+  // 마지막 행으로 부드럽게 스크롤
+  tbody.lastElementChild.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// SKU 초기 행 생성은 sheet 시스템이 담당
+
+// ── Image Preview ───────────────────────────────────────
+// ── 이미지 미리보기 / 삭제 ──────────────────────────────────
+// 구조: wrap 안에 .img-upload-label(플레이스홀더+input) OR .img-preview-wrap(이미지+삭제버튼)
+function previewImage(input, wrapId) {
+  const wrap = document.getElementById(wrapId);
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    // 플레이스홀더 레이블 숨기기
+    const lbl = wrap.querySelector('.img-upload-label, label');
+    if (lbl) lbl.style.display = 'none';
+    wrap.querySelectorAll('.img-label, .img-hint, .upload-icon').forEach(el => {
+      el.style.display = 'none';
+    });
+
+    // 기존 preview wrap 제거 후 재생성
+    wrap.querySelectorAll('.img-preview-wrap').forEach(el => el.remove());
+
+    const pw = document.createElement('div');
+    pw.className = 'img-preview-wrap';
+    pw.style.cssText = 'position:absolute;inset:0;border-radius:inherit;overflow:hidden;';
+
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0B1825;';
+
+    const btn = document.createElement('button');
+    btn.className = 'img-del-btn';
+    btn.innerHTML = '✕';
+    btn.title = '이미지 삭제';
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      ev.preventDefault();
+      removeImage(wrap);
+      triggerSave();
+    });
+
+    pw.appendChild(img);
+    pw.appendChild(btn);
+    wrap.appendChild(pw);
+
+    // 호버 시 버튼 표시 (pw hover → btn opacity)
+    pw.addEventListener('mouseenter', () => btn.style.opacity = '1');
+    pw.addEventListener('mouseleave', () => btn.style.opacity = '0');
+
+    // 파일 input 값 초기화 (재업로드 가능하게)
+    input.value = '';
+
+    triggerSave();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeImage(wrap) {
+  // preview wrap 제거
+  wrap.querySelectorAll('.img-preview-wrap').forEach(el => el.remove());
+  // 플레이스홀더 복원
+  const lbl = wrap.querySelector('.img-upload-label, label');
+  if (lbl) lbl.style.display = '';
+  wrap.querySelectorAll('.img-label, .img-hint, .upload-icon').forEach(el => {
+    el.style.display = '';
+  });
+  const fi = wrap.querySelector('input[type="file"]');
+  if (fi) fi.value = '';
+}
+
+// ── Checklist Toggle ────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+
+// ════════════════════════════════════════════════════════════
+// SHEET (EXCEL-LIKE) SYSTEM
+// ════════════════════════════════════════════════════════════
+
+const FORM_ROOT   = document.getElementById('form-root');   // 메인 폼 컨테이너
+const SHEET_TABS  = document.getElementById('sheet-tabs');
+
+// ── 상태 저장 단위 ─────────────────────────────────────────
+// sheetStore[id] = { name, inputs, textareas, editables, skuRows, images }
+const sheetStore  = {};
+let   activeSheet = null;
+
+// ── 폼 직렬화 (현재 화면 → 객체) ──────────────────────────
+function serializeForm() {
+  const data = { inputs: {}, textareas: {}, editables: {}, skuRows: [], images: {} };
+
+  // text inputs (고유 index 기반)
+  document.querySelectorAll('input[type="text"]').forEach((el, i) => {
+    data.inputs[i] = el.value;
+  });
+
+  // textareas
+  document.querySelectorAll('textarea').forEach((el, i) => {
+    data.textareas[i] = el.value;
+  });
+
+  // contenteditable
+  document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+    data.editables[i] = el.innerHTML;
+  });
+
+  // color inputs
+  data.colors = [];
+  document.querySelectorAll('input[type="color"]').forEach(el => {
+    data.colors.push(el.value);
+  });
+
+  // SKU rows (tbody)
+  const skuBody = document.getElementById('sku-body');
+  if (skuBody) {
+    skuBody.querySelectorAll('tr').forEach(tr => {
+      const vals = [];
+      tr.querySelectorAll('input[type="text"]').forEach(inp => vals.push(inp.value));
+      data.skuRows.push(vals);
+    });
+  }
+
+  // images (data-url)
+  document.querySelectorAll('[id$="-wrap"] .img-preview-wrap img').forEach(img => {
+    const wrap = img.closest('[id$="-wrap"]');
+    if (wrap) data.images[wrap.id] = img.src;
+  });
+
+  return data;
+}
+
+// ── 폼 복원 (객체 → 화면) ─────────────────────────────────
+function deserializeForm(data) {
+  if (!data) return;
+
+  document.querySelectorAll('input[type="text"]').forEach((el, i) => {
+    el.value = data.inputs?.[i] ?? '';
+  });
+
+  document.querySelectorAll('textarea').forEach((el, i) => {
+    el.value = data.textareas?.[i] ?? '';
+  });
+
+  document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+    if (data.editables?.[i] !== undefined) el.innerHTML = data.editables[i];
+  });
+
+  if (data.colors) {
+    document.querySelectorAll('input[type="color"]').forEach((el, i) => {
+      if (data.colors[i]) el.value = data.colors[i];
+    });
+  }
+
+  // SKU rows
+  const skuBody = document.getElementById('sku-body');
+  if (skuBody && data.skuRows?.length) {
+    // 기존 행 모두 제거
+    skuBody.innerHTML = '';
+    data.skuRows.forEach(vals => {
+      const tr = skuMakeRow();
+      tr.querySelectorAll('input[type="text"]').forEach((inp, i) => {
+        inp.value = vals[i] ?? '';
+      });
+      skuBody.appendChild(tr);
+    });
+    skuUpdateNums();
+  }
+
+  // images
+  if (data.images) {
+    Object.entries(data.images).forEach(([wrapId, src]) => {
+      const wrap = document.getElementById(wrapId);
+      if (!wrap) return;
+      // 더미 input으로 previewImage 흉내
+      removeImage(wrap);
+      // 플레이스홀더 숨기기
+      wrap.querySelectorAll('.img-label, .img-hint, .upload-icon').forEach(el => el.style.display = 'none');
+      const lbl = wrap.querySelector('.img-upload-label, label');
+      if (lbl) lbl.style.display = 'none';
+      // preview wrap 생성
+      wrap.querySelectorAll('.img-preview-wrap').forEach(el => el.remove());
+      const pw = document.createElement('div');
+      pw.className = 'img-preview-wrap';
+      pw.style.cssText = 'position:absolute;inset:0;border-radius:inherit;overflow:hidden;';
+      const img = document.createElement('img');
+      img.src = src;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0B1825;';
+      const btn = document.createElement('button');
+      btn.className = 'img-del-btn';
+      btn.innerHTML = '✕';
+      btn.title = '이미지 삭제';
+      btn.addEventListener('click', (ev) => {
+        ev.stopPropagation(); ev.preventDefault();
+        removeImage(wrap); triggerSave();
+      });
+      pw.appendChild(img); pw.appendChild(btn);
+      wrap.appendChild(pw);
+      pw.addEventListener('mouseenter', () => btn.style.opacity = '1');
+      pw.addEventListener('mouseleave', () => btn.style.opacity = '0');
+    });
+  }
+}
+
+// ── 탭 DOM 생성 ───────────────────────────────────────────
+function sheetMakeTabEl(id, name) {
+  const tab = document.createElement('div');
+  tab.className = 'sheet-tab';
+  tab.dataset.id = id;
+
+  const nameSpan = document.createElement('span');
+  nameSpan.className = 'sheet-tab-name';
+  nameSpan.textContent = name;
+  nameSpan.title = '더블클릭으로 이름 변경';
+
+  // 클릭: 비활성 탭은 전환, 활성 탭이면 이름 편집 시작
+  tab.addEventListener('click', e => {
+    if (tab.classList.contains('active')) return; // 활성탭 클릭은 이름편집이 처리
+    sheetSwitch(id);
+  });
+
+  // 활성 탭에서 이름 클릭 → 바로 편집
+  nameSpan.addEventListener('click', e => {
+    if (!tab.classList.contains('active')) return;
+    e.stopPropagation();
+    nameSpan.contentEditable = 'true';
+    nameSpan.focus();
+    // 전체 선택
+    const range = document.createRange();
+    range.selectNodeContents(nameSpan);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+  nameSpan.addEventListener('blur', () => {
+    nameSpan.contentEditable = 'false';
+    const newName = nameSpan.textContent.trim() || '시트';
+    nameSpan.textContent = newName;
+    sheetStore[id].name = newName;
+    triggerSave();
+  });
+  nameSpan.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); nameSpan.blur(); }
+    e.stopPropagation();
+  });
+
+  // 삭제 버튼
+  const del = document.createElement('button');
+  del.className = 'sheet-tab-del';
+  del.innerHTML = '✕';
+  del.title = '이 시트 삭제';
+  del.addEventListener('click', e => {
+    e.stopPropagation();
+    sheetDelete(id);
+  });
+
+  const editHint = document.createElement('span');
+  editHint.className = 'sheet-tab-edit-hint';
+  editHint.textContent = '✎';
+  editHint.title = '클릭 후 이름 수정';
+
+  tab.appendChild(nameSpan);
+  tab.appendChild(editHint);
+  tab.appendChild(del);
+  return tab;
+}
+
+// ── 시트 전환 ─────────────────────────────────────────────
+function sheetSwitch(id) {
+  if (id === activeSheet) return;
+
+  // 현재 시트 저장
+  if (activeSheet) {
+    sheetStore[activeSheet].data = serializeForm();
+  }
+
+  // 탭 활성화
+  SHEET_TABS.querySelectorAll('.sheet-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.id === id);
+  });
+
+  // 폼 초기화 후 복원
+  clearFormSilent();
+  deserializeForm(sheetStore[id]?.data);
+  activeSheet = id;
+
+  // 페이지 상단으로
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // 헤더 시트명 반영
+  updatePageTitle();
+}
+
+// ── 시트 추가 ─────────────────────────────────────────────
+let sheetCounter = 1;
+function sheetAdd(name) {
+  sheetCounter++;
+  const id   = 'sheet-' + Date.now();
+  const label = name || '시트 ' + sheetCounter;
+
+  sheetStore[id] = { name: label, data: null };
+
+  const tabEl = sheetMakeTabEl(id, label);
+  SHEET_TABS.appendChild(tabEl);
+
+  sheetSwitch(id);
+  tabEl.scrollIntoView({ behavior: 'smooth', inline: 'end' });
+}
+
+// ── 시트 삭제 ─────────────────────────────────────────────
+function sheetDelete(id) {
+  const allTabs = [...SHEET_TABS.querySelectorAll('.sheet-tab')];
+  if (allTabs.length <= 1) {
+    alert('시트는 최소 1개 이상 있어야 합니다.');
+    return;
+  }
+  const name = sheetStore[id]?.name || '';
+  if (!confirm(`"${name}" 시트를 삭제하시겠습니까?\n이 시트의 모든 입력 내용이 사라집니다.`)) return;
+
+  const tabEl = SHEET_TABS.querySelector(`[data-id="${id}"]`);
+  const idx   = allTabs.indexOf(tabEl);
+
+  tabEl.remove();
+  delete sheetStore[id];
+
+  // 다른 시트로 이동
+  if (activeSheet === id) {
+    activeSheet = null;
+    const remaining = [...SHEET_TABS.querySelectorAll('.sheet-tab')];
+    const nextTab   = remaining[Math.min(idx, remaining.length - 1)];
+    if (nextTab) sheetSwitch(nextTab.dataset.id);
+  }
+  lsSave();
+}
+
+// ── 폼 조용히 초기화 (전환 시) ───────────────────────────
+function clearFormSilent() {
+  document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+  document.querySelectorAll('textarea').forEach(el => el.value = '');
+  // SKU 12행 초기화
+  const skuBody = document.getElementById('sku-body');
+  if (skuBody) {
+    skuBody.innerHTML = '';
+    for (let i = 0; i < 12; i++) skuBody.appendChild(skuMakeRow());
+    skuUpdateNums();
+  }
+  // 이미지 초기화
+  document.querySelectorAll('[id$="-wrap"]').forEach(wrap => { try { removeImage(wrap); } catch(e){} });
+}
+
+// ── 타이틀 업데이트 ──────────────────────────────────────
+function updatePageTitle() {
+  if (!activeSheet) return;
+  const name = sheetStore[activeSheet]?.name || '';
+  document.title = name + ' · 디자인 기획서';
+}
+
+// ════════════════════════════════════════════════════════
+// AUTO-SAVE  (localStorage)
+// ════════════════════════════════════════════════════════
+const LS_KEY      = 'designBrief_v2';
+let   saveTimer   = null;
+let   isDirty     = false;
+
+// 저장 상태 UI
+function setSaveStatus(state) {
+  const dot  = document.getElementById('save-dot');
+  const text = document.getElementById('save-text');
+  if (!dot || !text) return;
+  if (state === 'saving') {
+    dot.style.background  = '#FFA726';
+    text.style.color      = 'rgba(255,255,255,.7)';
+    text.textContent      = '저장 중…';
+  } else if (state === 'saved') {
+    dot.style.background  = '#4CAF50';
+    text.style.color      = 'rgba(255,255,255,.55)';
+    const now = new Date();
+    text.textContent = `저장됨 ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+  } else if (state === 'dirty') {
+    dot.style.background  = '#EF9A9A';
+    text.style.color      = 'rgba(255,255,255,.45)';
+    text.textContent      = '미저장';
+  }
+}
+
+// localStorage에 전체 상태 저장
+function lsSave() {
+  setSaveStatus('saving');
+  try {
+    // 현재 활성 시트 데이터 먼저 갱신
+    if (activeSheet) sheetStore[activeSheet].data = serializeForm();
+
+    const payload = {
+      activeSheet,
+      sheetCounter,
+      sheetOrder: [...SHEET_TABS.querySelectorAll('.sheet-tab')].map(t => t.dataset.id),
+      sheets: {}
+    };
+    Object.entries(sheetStore).forEach(([id, sheet]) => {
+      payload.sheets[id] = { name: sheet.name, data: sheet.data };
+    });
+    localStorage.setItem(LS_KEY, JSON.stringify(payload));
+    setSaveStatus('saved');
+    isDirty = false;
+  } catch(e) {
+    console.warn('AutoSave failed:', e);
+    setSaveStatus('dirty');
+  }
+}
+
+// 변경 감지 → 3초 뒤 자동저장 (debounce)
+function triggerSave() {
+  isDirty = true;
+  setSaveStatus('dirty');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(lsSave, 3000);
+}
+
+// 모든 입력 이벤트에 리스너 부착
+function attachInputListeners() {
+  document.addEventListener('input',  triggerSave);
+  document.addEventListener('change', triggerSave);   // color input 등
+}
+
+// localStorage에서 복원
+function lsLoad() {
+  const raw = localStorage.getItem(LS_KEY);
+  if (!raw) return false;
+  try {
+    const payload = JSON.parse(raw);
+    if (!payload?.sheets || !payload?.sheetOrder?.length) return false;
+
+    // sheetStore 복원
+    Object.entries(payload.sheets).forEach(([id, sheet]) => {
+      sheetStore[id] = { name: sheet.name, data: sheet.data };
+    });
+
+    // 탭 순서대로 DOM 생성
+    payload.sheetOrder.forEach(id => {
+      if (!sheetStore[id]) return;
+      const tabEl = sheetMakeTabEl(id, sheetStore[id].name);
+      SHEET_TABS.appendChild(tabEl);
+    });
+
+    sheetCounter = payload.sheetCounter || payload.sheetOrder.length;
+
+    // 마지막 활성 시트 복원
+    const restoreId = payload.activeSheet && sheetStore[payload.activeSheet]
+      ? payload.activeSheet
+      : payload.sheetOrder[0];
+
+    // 탭 활성화
+    SHEET_TABS.querySelectorAll('.sheet-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.id === restoreId);
+    });
+    activeSheet = restoreId;
+
+    // 폼 복원 (SKU 초기 생성 후)
+    const skuBody = document.getElementById('sku-body');
+    if (skuBody && skuBody.children.length === 0) {
+      for (let i = 0; i < 12; i++) skuBody.appendChild(skuMakeRow());
+      skuUpdateNums();
+    }
+    if (sheetStore[restoreId]?.data) {
+      deserializeForm(sheetStore[restoreId].data);
+    }
+
+    updatePageTitle();
+    setSaveStatus('saved');
+    return true;
+  } catch(e) {
+    console.warn('lsLoad error:', e);
+    return false;
+  }
+}
+
+// ── 초기 시트 생성 ────────────────────────────────────────
+(function initSheets() {
+  // 저장된 데이터 있으면 복원, 없으면 새로 생성
+  const loaded = lsLoad();
+
+  if (!loaded) {
+    sheetCounter = 0;
+    const firstId   = 'sheet-' + Date.now();
+    const firstName = '시트 1';
+    sheetStore[firstId] = { name: firstName, data: null };
+    const firstTab = sheetMakeTabEl(firstId, firstName);
+    firstTab.classList.add('active');
+    SHEET_TABS.appendChild(firstTab);
+    activeSheet = firstId;
+
+    const skuBody = document.getElementById('sku-body');
+    if (skuBody) {
+      for (let i = 0; i < 12; i++) skuBody.appendChild(skuMakeRow());
+      skuUpdateNums();
+    }
+    sheetCounter = 1;
+    updatePageTitle();
+    lsSave();
+  }
+
+  // 입력 감지 리스너 부착
+  attachInputListeners();
+
+  // 탭 이름 변경도 저장 트리거
+  SHEET_TABS.addEventListener('input', triggerSave);
+
+  // 페이지 떠날 때 강제 저장
+  window.addEventListener('beforeunload', () => {
+    if (isDirty) lsSave();
+  });
+})();
+
+// ── Clear All (현재 시트만) ─────────────────────────────
+function clearAll() {
+  if (!confirm('현재 시트의 모든 입력 내용을 초기화하시겠습니까?')) return;
+  clearFormSilent();
+  if (activeSheet) sheetStore[activeSheet].data = null;
+  lsSave();
+}
+
+// ── Smooth scroll for nav ────────────────────────────────
+document.querySelectorAll('.nav-pills a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── Section fade-in on scroll ────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationPlayState = 'running';
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.form-section').forEach(s => {
+  s.style.animationPlayState = 'paused';
+  observer.observe(s);
+});
+</script>
+</body>
+</html>
