@@ -11,8 +11,8 @@ from collections import defaultdict
 FIREBASE_URL = (
     "https://danp-dashboard-default-rtdb.asia-southeast1.firebasedatabase.app/.json"
 )
+DASHBOARD_URL = "https://danp0acount-blip.github.io/danp-dashboard/"
 
-# Secret에 curl 명령어 통째로 들어와도 URL만 뽑아냄
 _raw = os.environ.get("SLACK_WEBHOOK_URL", "")
 _match = re.search(r"https://hooks\.slack\.com/services/[^\s'\"]+", _raw)
 if not _match:
@@ -113,6 +113,7 @@ def build_message():
 
     if not overdue and not urgent:
         lines += ["", "✅ 마감 지난/임박한 항목 없음"]
+        lines += ["", f"📊 <{DASHBOARD_URL}|대시보드 바로가기>"]
         return "\n".join(lines)
 
     if overdue:
@@ -129,7 +130,7 @@ def build_message():
             for it in group:
                 lines.append(format_urgent_line(it))
 
-    lines += ["", "_대시보드: https://danp0acount-blip.github.io/danp-dashboard/_"]
+    lines += ["", f"📊 <{DASHBOARD_URL}|대시보드 바로가기>"]
     return "\n".join(lines)
 
 
