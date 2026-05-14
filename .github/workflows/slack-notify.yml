@@ -1,0 +1,26 @@
+name: Drop Tracker Slack Notification
+
+on:
+  schedule:
+    # 매일 0시 UTC = 9시 KST
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # 수동 실행 버튼
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run notifier
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          USER_IDS_JSON: ${{ secrets.USER_IDS_JSON }}
+        run: python scripts/notify_slack.py
