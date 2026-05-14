@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
-"""DANP 드랍 트래커 — Slack 일일 알림
-
-매일 9시 KST에 대시보드(Firebase)에서 미완료 plans/tasks를 수집해
-마감 지난 항목 + D-3 이내 임박 항목을 Slack으로 보냄.
-"""
+"""DANP 드랍 트래커 — Slack 일일 알림"""
 
 import os
+import re
 import json
 import requests
 from datetime import datetime, timezone, timedelta
@@ -14,25 +11,25 @@ from collections import defaultdict
 FIREBASE_URL = (
     "https://danp-dashboard-default-rtdb.asia-southeast1.firebasedatabase.app/.json"
 )
-SLACK_WEBHOOK_URL = os.environ["SLACK_WEBHOOK_URL"]
 
-# 담당자 → Slack User ID 매핑 (Secrets에 JSON으로 저장)
-# 예: {"민주":"U01ABC123","유정":"U02DEF456",...}
+# Secret에 curl 명령어 통째로 들어와도 URL만 뽑아냄
+_raw = os.environ.get("SLACK_WEBHOOK_URL", "")
+_match = re.search(r"https://hooks\.slack\.com/services/[^\s'\"]+", _raw)
+if not _match:
+    raise SystemExit("SLACK_WEBHOOK_URL에 유효한 Slack webhook URL이 없습니다.")
+SLACK_WEBHOOK_URL = _match.group(0)
+
 try:
     USER_IDS = json.loads(os.environ.get("USER_IDS_JSON", "{}"))
 except json.JSONDecodeError:
     USER_IDS = {}
 
-# 한국 시간 기준 오늘
 KST = timezone(timedelta(hours=9))
 TODAY = datetime.now(KST).date()
-
-# 임박 기준: D-3 이내
 URGENT_THRESHOLD = 3
 
 
 def mention(names):
-    """담당자 이름 리스트 → Slack 멘션 문자열 (ID 있으면 진짜 멘션, 없으면 텍스트)"""
     if isinstance(names, str):
         names = [names]
     names = [n for n in names if n and n.strip()]
@@ -53,7 +50,6 @@ def parse_date(s):
 
 
 def collect():
-    """미완료 plans + tasks 수집"""
     r = requests.get(FIREBASE_URL, timeout=30)
     r.raise_for_status()
     data = r.json()["danp"]
@@ -61,46 +57,29 @@ def collect():
     items = []
     for drop in data["drops"]:
         dname = drop["name"]
-
-        # Plans (status != "제출완료")
         for p in drop.get("plans", []) or []:
             if p.get("status") == "제출완료":
                 continue
             due = parse_date(p.get("dl"))
             if not due:
                 continue
-            items.append({
-                "name": p["nm"],
-                "due": due,
-                "who": p.get("who") or [],
-                "drop": dname,
-            })
-
-        # Tasks (s != "완료")
+            items.append({"name": p["nm"], "due": due, "who": p.get("who") or [], "drop": dname})
         for t in drop.get("tasks", []) or []:
             if t.get("s") == "완료":
                 continue
             due = parse_date(t.get("d"))
             if not due:
                 continue
-            items.append({
-                "name": t["n"],
-                "due": due,
-                "who": t.get("w") or [],
-                "drop": dname,
-            })
-
+            items.append({"name": t["n"], "due": due, "who": t.get("w") or [], "drop": dname})
     return items
 
 
 def short_drop(name):
-    """'26 4th Running Drop' → '26 4th' / '26 FW 5th Winter' → '26 FW'"""
     parts = name.split()
     return " ".join(parts[:2]) if len(parts) >= 2 else name
 
 
 def group_by_who(items):
-    """같은 담당자 조합으로 묶고, 건수 많은 사람부터 정렬"""
     groups = defaultdict(list)
     for it in items:
         who = it["who"] if isinstance(it["who"], list) else [it["who"]]
@@ -130,7 +109,6 @@ def build_message():
 
     today_str = f"{TODAY.month}/{TODAY.day}"
     weekday = "월화수목금토일"[TODAY.weekday()]
-
     lines = [f"🚨 *드랍 트래커* · {today_str}({weekday})"]
 
     if not overdue and not urgent:
